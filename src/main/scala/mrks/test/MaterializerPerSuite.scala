@@ -1,18 +1,8 @@
 package mrks.test
 
-import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, Materializer}
-import org.scalatest.{BeforeAndAfterAll, Suite}
+import org.scalatest.Suite
 
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
-
-trait MaterializerPerSuite extends BeforeAndAfterAll { this: Suite =>
-  implicit val actorSystem: ActorSystem = ActorSystem(s"spec-actor-system${scala.util.Random.nextInt}")
+trait MaterializerPerSuite extends ActorSystemPerSuite { this: Suite =>
   implicit val materializer: Materializer = ActorMaterializer()(actorSystem)
-
-  override protected def afterAll(): Unit = {
-    super.afterAll()
-    Await.ready(actorSystem.terminate(), Duration.Inf)
-  }
 }
