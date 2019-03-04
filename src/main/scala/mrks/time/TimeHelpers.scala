@@ -1,7 +1,7 @@
 package mrks.time
 
 import java.time.temporal.TemporalAdjusters
-import java.time.{LocalDate, LocalDateTime, LocalTime}
+import java.time.{Instant, LocalDate, LocalDateTime, LocalTime}
 
 trait TimeHelpers {
   implicit class RichLocalDate(date: LocalDate) {
@@ -12,6 +12,11 @@ trait TimeHelpers {
 
     def <=(other: LocalDate): Boolean = date.isBefore(other) || date.isEqual(other)
     def >=(other: LocalDate): Boolean = date.isAfter(other) || date.isEqual(other)
+  }
+
+  implicit class RichInstant(instant: Instant) {
+    def <=(other: Instant): Boolean = instant.isBefore(other) || instant.equals(other)
+    def >=(other: Instant): Boolean = instant.isAfter(other) || instant.equals(other)
   }
 }
 
