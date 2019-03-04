@@ -8,8 +8,8 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
 trait MaterializerPerSuite extends BeforeAndAfterAll { this: Suite =>
-  implicit protected val actorSystem: ActorSystem = ActorSystem(s"spec-actor-system${scala.util.Random.nextInt()}")
-  implicit protected val materializer: Materializer = ActorMaterializer()(actorSystem)
+  implicit val actorSystem: ActorSystem = ActorSystem(s"spec-actor-system${scala.util.Random.nextInt}")
+  implicit val materializer: Materializer = ActorMaterializer()(actorSystem)
 
   override protected def afterAll(): Unit = {
     super.afterAll()
