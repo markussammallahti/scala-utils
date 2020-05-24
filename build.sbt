@@ -2,8 +2,6 @@ name := "scala-utils"
 
 organization := "mrks"
 
-version := "0.1.1"
-
 scalaVersion := "2.13.1"
 
 crossScalaVersions := Seq("2.12.10", "2.13.1")
