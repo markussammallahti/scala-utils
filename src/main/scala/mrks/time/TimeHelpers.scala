@@ -1,7 +1,8 @@
 package mrks.time
 
-import java.time.temporal.TemporalAdjusters
-import java.time.{Instant, LocalDate, LocalDateTime, LocalTime}
+import java.time.temporal.{ChronoField, ChronoUnit, TemporalAdjusters}
+import java.time._
+
 
 trait TimeHelpers {
   implicit class RichLocalDate(date: LocalDate) {
@@ -15,6 +16,26 @@ trait TimeHelpers {
   }
 
   implicit class RichInstant(instant: Instant) {
+    def toStartOfDay: Instant = instant.truncatedTo(ChronoUnit.DAYS)
+    def toEndOfDay: Instant   = instant.truncatedTo(ChronoUnit.DAYS).plusNanos(ChronoField.NANO_OF_DAY.range.getMaximum)
+
+    def toStartOfMonth: Instant = {
+      instant
+          .atOffset(ZoneOffset.UTC)
+          .`with`(TemporalAdjusters.firstDayOfMonth())
+          .truncatedTo(ChronoUnit.DAYS)
+          .toInstant
+    }
+
+    def toEndOfMonth: Instant   = {
+      instant
+          .atOffset(ZoneOffset.UTC)
+          .`with`(TemporalAdjusters.lastDayOfMonth())
+          .truncatedTo(ChronoUnit.DAYS)
+          .plusNanos(ChronoField.NANO_OF_DAY.range.getMaximum)
+          .toInstant
+    }
+
     def <=(other: Instant): Boolean = instant.isBefore(other) || instant.equals(other)
     def >=(other: Instant): Boolean = instant.isAfter(other) || instant.equals(other)
   }
