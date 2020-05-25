@@ -4,8 +4,8 @@ import java.time.temporal.{ChronoField, ChronoUnit, TemporalAdjusters}
 import java.time._
 
 
-trait TimeHelpers {
-  implicit class RichLocalDate(date: LocalDate) {
+trait TimeExtensions {
+  implicit class LocalDateExtensions(date: LocalDate) {
     def toStartOfDay: LocalDateTime = date.atStartOfDay()
     def toEndOfDay: LocalDateTime   = date.atTime(LocalTime.MAX)
     def toStartOfMonth: LocalDate   = date.`with`(TemporalAdjusters.firstDayOfMonth())
@@ -15,7 +15,7 @@ trait TimeHelpers {
     def >=(other: LocalDate): Boolean = date.isAfter(other) || date.isEqual(other)
   }
 
-  implicit class RichInstant(instant: Instant) {
+  implicit class InstantExtensions(instant: Instant) {
     def toStartOfDay: Instant = instant.truncatedTo(ChronoUnit.DAYS)
     def toEndOfDay: Instant   = instant.truncatedTo(ChronoUnit.DAYS).plusNanos(ChronoField.NANO_OF_DAY.range.getMaximum)
 
@@ -41,4 +41,4 @@ trait TimeHelpers {
   }
 }
 
-object TimeHelpers extends TimeHelpers
+object TimeExtensions extends TimeExtensions

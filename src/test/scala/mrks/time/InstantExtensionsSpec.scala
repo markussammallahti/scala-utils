@@ -6,8 +6,8 @@ import mrks.BaseSpec
 import org.scalatest.Inspectors
 
 
-class RichInstantSpec extends BaseSpec with Inspectors {
-  import TimeHelpers.RichInstant
+class InstantExtensionsSpec extends BaseSpec with Inspectors {
+  import TimeExtensions._
 
   private val testTime = Instant.now
 

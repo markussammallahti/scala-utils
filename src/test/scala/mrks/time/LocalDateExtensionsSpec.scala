@@ -4,8 +4,8 @@ import java.time.{LocalDate, LocalDateTime}
 
 import mrks.BaseSpec
 
-class RichLocalDateSpec extends BaseSpec {
-  import TimeHelpers.RichLocalDate
+class LocalDateExtensionsSpec extends BaseSpec {
+  import TimeExtensions._
 
   private val testDate = LocalDate.of(2018, 7, 4)
 
