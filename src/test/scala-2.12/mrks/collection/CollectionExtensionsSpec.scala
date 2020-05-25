@@ -4,13 +4,15 @@ import mrks.BaseSpec
 
 import scala.concurrent.Future
 
-class CollectionHelpersSpec extends BaseSpec {
-  import mrks.collection.CollectionHelpers._
+
+class CollectionExtensionsSpec extends BaseSpec {
+  import CollectionExtensions._
 
   case class Data(key: String, value: Int)
 
   private val data1 = Data("A", 1)
   private val data2 = Data("B", 2)
+  private val data3 = Data("B", 3)
 
   "toMapBy" should {
     "return map using function results as keys" in {
@@ -24,6 +26,14 @@ class CollectionHelpersSpec extends BaseSpec {
 
       items.toMapBy(_.key, _.value + 1) mustBe Map("A" -> 2, "B" -> 3)
       items.toMapBy(_.value, _.key.head) mustBe Map(1 -> 'A', 2 -> 'B')
+    }
+  }
+
+  "groupMap" should {
+    "create and transform groups" in {
+      val items = List(data1, data2, data3)
+
+      items.groupMap(_.key)(_.value) mustBe Map("A" -> Seq(1), "B" -> Seq(2, 3))
     }
   }
 

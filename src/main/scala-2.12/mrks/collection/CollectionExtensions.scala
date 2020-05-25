@@ -4,14 +4,16 @@ import scala.collection.generic.CanBuildFrom
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.higherKinds
 
-trait CollectionHelpers {
-  implicit class RichSeq[A, M[X] <: Seq[X]](seq: M[A]) {
-    def toMapBy[C](key: A => C): Map[C,A] = {
-      seq.map(item => key(item) -> item).toMap
-    }
 
-    def toMapBy[C,D](key: A => C, value: A => D): Map[C,D] = {
-      seq.map(item => key(item) -> value(item)).toMap
+trait CollectionExtensions {
+  implicit class CollectionExtensions[A, M[X] <: Seq[X]](seq: M[A]) {
+    def toMapBy[B](key: A => B): Map[B,A] = SeqUtils.toMap(seq, key)
+    def toMapBy[B, C](key: A => B, value: A => C): Map[B, C] = SeqUtils.toMap(seq, key, value)
+
+    def groupMap[B, C](key: A => B)(value: A => C): Map[B, Seq[C]] = {
+      seq.groupBy(key).map { case (k, values) =>
+        k -> values.map(value)
+      }
     }
 
     def filterWith(p: A => Future[Boolean])(implicit cbf: CanBuildFrom[M[A], A, M[A]], ec: ExecutionContext): Future[M[A]] = {
@@ -25,4 +27,4 @@ trait CollectionHelpers {
   }
 }
 
-object CollectionHelpers extends CollectionHelpers
+object CollectionExtensions extends CollectionExtensions

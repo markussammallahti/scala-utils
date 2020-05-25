@@ -5,7 +5,7 @@
 Add dependency
 ```
 resolvers += Resolver.bintrayRepo("mrks", "maven")
-libraryDependencies += "mrks" %% "scala-utils" % "0.1.1"
+libraryDependencies += "mrks" %% "scala-utils" % "1.0.0"
 ```
 
-See examples in [tests](src/test/scala/mrks)
+See examples in [tests](src/test)
