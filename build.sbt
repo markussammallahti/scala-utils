@@ -1,3 +1,5 @@
+import sbtghpackages.TokenSource
+
 name := "scala-utils"
 
 organization := "mrks"
@@ -12,3 +14,7 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.0.+" % Provided,
   "com.typesafe.akka" %% "akka-stream" % "2.5.+" % Provided
 )
+
+githubOwner := "markussammallahti"
+githubRepository := "scala-utils"
+githubTokenSource := TokenSource.Environment("GITHUB_TOKEN") || TokenSource.GitConfig("github.token")
