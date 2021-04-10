@@ -9,6 +9,8 @@ jobs:
   release:
     name: Publish
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v10
@@ -17,6 +19,4 @@ jobs:
       - name: Test
         run: sbt +test
       - name: Publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: sbt +publish
